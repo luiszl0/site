@@ -20,17 +20,18 @@
 
         body {
             background-color: #2e2e2e;
-            overflow: hidden; /* Prevent main page scrolling */
+            overflow: hidden;
         }
 
-        /* --- GRID LAYOUT --- */
+        /* GRID LAYOUT */
         .container {
             display: grid;
             grid-template-columns: 40% 60%;
             height: 100vh;
+            position: relative; /* allow overlay elements */
         }
 
-        /* --- IMAGE SECTION --- */
+        /* IMAGE PANEL */
         .image-panel {
             position: relative;
             overflow: hidden;
@@ -51,7 +52,6 @@
             filter: grayscale(50%) contrast(1.2);
         }
 
-        /* Soft gradient overlay */
         .image-panel::after {
             content: "";
             position: absolute;
@@ -59,12 +59,13 @@
             background: linear-gradient(to right, rgba(0,0,0,0.6), transparent);
         }
 
-        /* --- TEXT PANEL --- */
+        /* TEXT PANEL */
         .text-panel {
             padding: 80px 90px;
             overflow-y: auto;
             animation: slideUp 1s ease;
             line-height: 1.7;
+            position: relative;
         }
 
         .text-panel h1 {
@@ -79,7 +80,16 @@
             color: #f1f1f1;
         }
 
-        /* --- SCROLLBAR STYLE --- */
+        .text-panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url('img/noise.png');
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        /* SCROLLBAR */
         .text-panel::-webkit-scrollbar {
             width: 8px;
         }
@@ -88,7 +98,7 @@
             border-radius: 4px;
         }
 
-        /* --- ANIMATIONS --- */
+        /* ANIMATIONS */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -99,25 +109,23 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- RESPONSIVE DESIGN --- */
-        @media (max-width: 900px) {
-            .container {
-                grid-template-columns: 1fr;
-                height: auto;
-            }
-
-            .image-panel {
-                height: 55vh;
-            }
-
-            body {
-                overflow: auto;
-            }
-
-            .text-panel {
-                height: auto;
-                padding: 40px 25px;
-            }
+        /* ----------------------------------- */
+        /*  VERTICAL DATA STREAM (Right Edge)  */
+        /* ----------------------------------- */
+        #data-stream {
+            position: absolute;
+            right: 5px;
+            top: 0;
+            width: 18px;
+            height: 100%;
+            font-family: monospace;
+            font-size: 10px;
+            line-height: 12px;
+            opacity: 0.25;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            pointer-events: none;
+            user-select: none;
         }
     </style>
 </head>
@@ -126,120 +134,51 @@
 
     <div class="container">
 
+        <!-- Minimal Data Stream -->
+        <div id="data-stream"></div>
+
         <div class="image-panel">
             <img src="img/gothic.png" alt="Image">
         </div>
 
-        <div class="text-panel">
+        <div class="text-panel" id="scroll-panel">
 
-            <!-- <div id="glitch-text" style="font-family: monospace; margin-top: 10px; margin-bottom: 20px; font-size: 22px;"></div> -->
-            <div id="matrix" style="font-family: monospace; margin-top: 40px; line-height: 1.2;"></div>
+            <!-- <div id="matrix" style="font-family: monospace; margin-top: 40px; line-height: 1.2;"></div> -->
 
-            <h1>Lorem Ipsum ---</h1>
+            <h1>Ice Walker ---</h1>
 
-            <p>2025 WALKINGIN 在冰上行走</p>
+            <p class="section">2025 WALKINGIN 在冰上行走</p>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <p class="section">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <p class="section">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <p class="section">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ワ ル カ ニ ン</p>
+
+            <p class="section">氷上をゆくとき、心を乱すな。
+            息を深く整え、一歩一歩を刃のごとく慎め。
+            迷いを捨てれば、道は必ず応ずる。</p>
 
             <div id="typewriter" style="font-family: monospace; margin-top: 40px; font-size: 16px; white-space: pre-wrap;"></div>
-
-            <!-- <div id="fish-animation" style="font-family: monospace; margin-top: 40px;"></div> -->
-
-            <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p> -->
 
         </div>
 
     </div>
 
     <script>
-    
-    // const fishBox = document.getElementById("fish-animation");
-
-    // let fish = "-<°)))><. -<°)))><. -<°)))><";
-    // let maxLength = 50;
-    // let position = maxLength - fish.length; // start on the right
-
-    // function animateFish() {
-    //     // Build empty track
-    //     let track = ".".repeat(maxLength);
-
-    //     // Insert fish moving LEFT
-    //     let output =
-    //         track.substring(0, position) +
-    //         fish +
-    //         track.substring(position + fish.length);
-
-    //     // Regex cleaning (optional)
-    //     output = output.replace(/\.{2,}/g, m => ".".repeat(m.length));
-
-    //     // Render
-    //     fishBox.textContent = output;
-
-    //     // Move LEFT
-    //     position--;
-
-    //     // If offscreen, reset to the right side
-    //     if (position < 0) {
-    //         position = maxLength - fish.length;
-    //     }
-    // }
-
-    // // Run animation every 80ms
-    // setInterval(animateFish, 80);
-
-
-    // --- GLITCH TEXT ANIMATION ---
-    // const glitchBox = document.getElementById("glitch-text");
-
-    // // Text to glitch
-    // const baseText = "Hello!";
-
-    // // Characters used to glitch
-    // const glitchChars = ["@", "#", "%", "£", "§", "&", "?", "!", "*", "Ξ", "∅", "⌁", "▞", "▚"];
-
-    // function glitchFrame() {
-    //     // Take the original text
-    //     let output = baseText;
-
-    //     // REGEX: randomly replace 1–3 characters with glitch symbols
-    //     output = output.replace(/./g, (char) => {
-    //         // ~10% chance to glitch each character
-    //         if (Math.random() < 0.1) {
-    //             return glitchChars[Math.floor(Math.random() * glitchChars.length)];
-    //         }
-    //         return char;
-    //     });
-
-    //     // Display output
-    //     glitchBox.textContent = output;
-    // }
-
-    // // Update every 80ms
-    // setInterval(glitchFrame, 80);
-
-
-    // --- TYPEWRITER EFFECT ---
-     const typeBox = document.getElementById("typewriter");
+    /* --------------------------------------------- */
+    /* TYPEWRITER EFFECT */
+    /* --------------------------------------------- */
+    const typeBox = document.getElementById("typewriter");
 
     const text = "When walking on ice, move slowly, breathe softly, and trust your steps.";
     let index = 0;
@@ -247,73 +186,60 @@
 
     function typeWriter() {
         if (index <= text.length) {
-            // Reveal text character by character
             typeBox.textContent = text.substring(0, index) + (cursorVisible ? "_" : " ");
             index++;
         } else {
-            // After finishing, continue blinking cursor
             typeBox.textContent = text + (cursorVisible ? "_" : " ");
         }
     }
 
-    // Cursor blink toggle
-    setInterval(() => {
-        cursorVisible = !cursorVisible;
-    }, 400);
-
-    // Typewriter speed
+    setInterval(() => cursorVisible = !cursorVisible, 400);
     setInterval(typeWriter, 60);
 
-
-    // --- MATRIX EFFECT ---
+    /* --------------------------------------------- */
+    /* MATRIX MINI ANIMATION */
+    /* --------------------------------------------- */
     const matrixBox = document.getElementById("matrix");
-
-    // Characters for the matrix rain
     const chars = "01アカサタナハマヤラワZXCVBNM$#%*+-<>";
-    
-    const width = 40;    // characters per line
-    const height = 20;   // number of rows displayed
+    const width = 40;
+    const height = 20;
     let columns = [];
 
-    // Initialize columns – each column has a "y" position
-    for (let i = 0; i < width; i++) {
-        columns[i] = Math.floor(Math.random() * height);
-    }
+    for (let i = 0; i < width; i++) columns[i] = Math.floor(Math.random() * height);
 
     function matrixFrame() {
         let output = "";
-
         for (let row = 0; row < height; row++) {
             for (let col = 0; col < width; col++) {
-                
-                // If the falling position is at this row, print random char
-                if (columns[col] === row) {
-                    output += chars.charAt(Math.floor(Math.random() * chars.length));
-                } else {
-                    output += " ";
-                }
+                output += (columns[col] === row)
+                    ? chars.charAt(Math.floor(Math.random() * chars.length))
+                    : " ";
             }
             output += "\n";
         }
-
-        // Move each column downward, reset randomly
-        for (let i = 0; i < width; i++) {
-            if (Math.random() > 0.975) {
-                columns[i] = 0;
-            } else {
-                columns[i]++;
-            }
-            if (columns[i] > height) columns[i] = 0;
-        }
-
-        // Render into the text panel
+        for (let i = 0; i < width; i++) columns[i] = (columns[i] > height) ? 0 : columns[i] + 1;
         matrixBox.textContent = output;
     }
 
-    setInterval(matrixFrame, 80); // speed of animation
+    setInterval(matrixFrame, 80);
+
+    /* --------------------------------------------- */
+    /* VERTICAL DATA STREAM */
+    /* --------------------------------------------- */
+    const dataStream = document.getElementById("data-stream");
+    const streamChars = "01△▽◣◢◆◇◧◨⟡+-*/$#%";
+
+    function updateStream() {
+        let s = "";
+        for (let i = 0; i < 80; i++) {
+            s += streamChars[Math.floor(Math.random() * streamChars.length)];
+        }
+        dataStream.textContent = s;
+    }
+
+    setInterval(updateStream, 180);
 
     </script>
 
 </body>
-
 </html>
