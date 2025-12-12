@@ -1,1 +1,1 @@
-![alt text](./img/img.png)
+![alt text](./img/index.png)
