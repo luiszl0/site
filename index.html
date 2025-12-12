@@ -132,15 +132,12 @@
 
         <div class="text-panel">
 
-            <h1>Lorem Ipsum</h1>
+            <!-- <div id="glitch-text" style="font-family: monospace; margin-top: 10px; margin-bottom: 20px; font-size: 22px;"></div> -->
+            <div id="matrix" style="font-family: monospace; margin-top: 40px; line-height: 1.2;"></div>
 
-            <p>2020 WALKINGIN 在冰上行走</p>
+            <h1>Lorem Ipsum ---</h1>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+            <p>2025 WALKINGIN 在冰上行走</p>
 
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -153,6 +150,16 @@
                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+
+            <div id="typewriter" style="font-family: monospace; margin-top: 40px; font-size: 16px; white-space: pre-wrap;"></div>
+
+            <div id="fish-animation" style="font-family: monospace; margin-top: 40px;"></div>
 
             <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -163,6 +170,149 @@
         </div>
 
     </div>
+
+    <script>
+    
+    const fishBox = document.getElementById("fish-animation");
+
+    let fish = "-<°)))><. -<°)))><. -<°)))><";
+    let maxLength = 50;
+    let position = maxLength - fish.length; // start on the right
+
+    function animateFish() {
+        // Build empty track
+        let track = ".".repeat(maxLength);
+
+        // Insert fish moving LEFT
+        let output =
+            track.substring(0, position) +
+            fish +
+            track.substring(position + fish.length);
+
+        // Regex cleaning (optional)
+        output = output.replace(/\.{2,}/g, m => ".".repeat(m.length));
+
+        // Render
+        fishBox.textContent = output;
+
+        // Move LEFT
+        position--;
+
+        // If offscreen, reset to the right side
+        if (position < 0) {
+            position = maxLength - fish.length;
+        }
+    }
+
+    // Run animation every 80ms
+    setInterval(animateFish, 80);
+
+
+    // --- GLITCH TEXT ANIMATION ---
+    const glitchBox = document.getElementById("glitch-text");
+
+    // Text to glitch
+    const baseText = "Hello!";
+
+    // Characters used to glitch
+    const glitchChars = ["@", "#", "%", "£", "§", "&", "?", "!", "*", "Ξ", "∅", "⌁", "▞", "▚"];
+
+    function glitchFrame() {
+        // Take the original text
+        let output = baseText;
+
+        // REGEX: randomly replace 1–3 characters with glitch symbols
+        output = output.replace(/./g, (char) => {
+            // ~10% chance to glitch each character
+            if (Math.random() < 0.1) {
+                return glitchChars[Math.floor(Math.random() * glitchChars.length)];
+            }
+            return char;
+        });
+
+        // Display output
+        glitchBox.textContent = output;
+    }
+
+    // Update every 80ms
+    setInterval(glitchFrame, 80);
+
+
+    // --- TYPEWRITER EFFECT ---
+     const typeBox = document.getElementById("typewriter");
+
+    const text = "When walking on ice, move slowly, breathe softly, and trust your steps.";
+    let index = 0;
+    let cursorVisible = true;
+
+    function typeWriter() {
+        if (index <= text.length) {
+            // Reveal text character by character
+            typeBox.textContent = text.substring(0, index) + (cursorVisible ? "_" : " ");
+            index++;
+        } else {
+            // After finishing, continue blinking cursor
+            typeBox.textContent = text + (cursorVisible ? "_" : " ");
+        }
+    }
+
+    // Cursor blink toggle
+    setInterval(() => {
+        cursorVisible = !cursorVisible;
+    }, 400);
+
+    // Typewriter speed
+    setInterval(typeWriter, 60);
+
+
+    // --- MATRIX RAIN EFFECT ---
+    const matrixBox = document.getElementById("matrix");
+
+    // Characters for the matrix rain
+    const chars = "01アカサタナハマヤラワZXCVBNM$#%*+-<>";
+    
+    const width = 40;    // characters per line
+    const height = 20;   // number of rows displayed
+    let columns = [];
+
+    // Initialize columns – each column has a "y" position
+    for (let i = 0; i < width; i++) {
+        columns[i] = Math.floor(Math.random() * height);
+    }
+
+    function matrixFrame() {
+        let output = "";
+
+        for (let row = 0; row < height; row++) {
+            for (let col = 0; col < width; col++) {
+                
+                // If the falling position is at this row, print random char
+                if (columns[col] === row) {
+                    output += chars.charAt(Math.floor(Math.random() * chars.length));
+                } else {
+                    output += " ";
+                }
+            }
+            output += "\n";
+        }
+
+        // Move each column downward, reset randomly
+        for (let i = 0; i < width; i++) {
+            if (Math.random() > 0.975) {
+                columns[i] = 0;
+            } else {
+                columns[i]++;
+            }
+            if (columns[i] > height) columns[i] = 0;
+        }
+
+        // Render into the text panel
+        matrixBox.textContent = output;
+    }
+
+    setInterval(matrixFrame, 80); // speed of animation
+
+    </script>
 
 </body>
 
