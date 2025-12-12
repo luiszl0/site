@@ -1,1 +1,1 @@
-![alt text](./img/girl.png)
+![alt text](./img/girl.jpg)
